@@ -48,15 +48,15 @@ namespace Yellow
   template<typename T>
   inline const T * Payload<T>::operator[](int idx)
   {
-    if (idx >= len)
+    if (idx >= (len / sizeof(T)))
       return NULL;
-    return (buff[idx]);
+    return (static_cast<T *>(buff)[idx]);
   }
 
   template<typename T>
   inline int Payload<T>::getLenght()
   {
-    return len;
+    return len / sizeof(T);
   }
 }
 
