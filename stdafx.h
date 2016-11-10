@@ -15,7 +15,13 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <cstring>
+#include <cstdint>
 #include <string>
 #include <unistd.h>
+#include <ctime>
+#include <ratio>
+#include <chrono>
+#include <vector>
+#include <fstream>
 
 #endif /* !STDAFX_H_ */

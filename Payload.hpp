@@ -14,21 +14,29 @@ namespace Yellow
 
     const T		*operator[](int);
     int			getLenght();
+  private:
+    int             len;
+    unsigned char    *buff;
   };
 
   template<typename T>
-  inline Payload<T>::Payload(void *, int len)
+  inline Payload<T>::Payload(void *buffer, int lenght)
+    : buff(static_cast<unsigned char *>(buffer)), len(lenght)
   {
   }
 
   template<typename T>
-  inline Payload<T>::Payload(const Payload<T>&)
+  inline Payload<T>::Payload(const Payload<T> &p)
   {
+    buff = p.buff;
+    len = p.len;
   }
 
   template<typename T>
-  inline Payload<T> & Payload<T>::operator=(const Payload<T>&)
+  inline Payload<T> & Payload<T>::operator=(const Payload<T> &p)
   {
+    buff = p.buff;
+    len = p.len;
     return *this;
   }
 
@@ -38,15 +46,17 @@ namespace Yellow
   }
 
   template<typename T>
-  inline const T * Payload<T>::operator[](int)
+  inline const T * Payload<T>::operator[](int idx)
   {
-    return NULL;
+    if (idx >= len)
+      return NULL;
+    return (buff[idx]);
   }
 
   template<typename T>
   inline int Payload<T>::getLenght()
   {
-    return 0;
+    return len;
   }
 }
 

@@ -15,30 +15,37 @@ namespace Yellow
     Packet(void *buff, int len);
     ~Packet();
 
-    const EthHeader                           &getEthHeader() const;
-    const IPHeader                            &getIPHeader() const;
+    const EthHeader                                 &getEthHeader() const;
+    const IPHeader                                  &getIPHeader() const;
 
-    const std::shared_ptr<Yellow::ITLHeader>  getTLHeader() const;
+    const std::shared_ptr<Yellow::ITLHeader>        getTLHeader() const;
 
     template <typename T>
-    const Payload<T>                        	getPayload() const;
+    const Payload<T>                                getPayload() const;
     template <typename T>
-    void                                      setPayload(const Payload<T> &);
+    void                                            setPayload(const Payload<T> &);
 
-    const unsigned char                       *operator[](int) const;
+    std::chrono::high_resolution_clock::time_point  &getTimePoint();
+    void                                            setTimePoint(std::chrono::high_resolution_clock::time_point &tp);
 
+    const unsigned char                             *operator[](int) const;
+    const int                                       getLenght() const;
   private:
-    unsigned char               *buff;
-    int                         len;
-    EthHeader                   eth;
-    IPHeader                    ip;
-    std::shared_ptr<ITLHeader>	tl;
+    unsigned char                                   *buff;
+    int                                             len;
+    EthHeader                                       eth;
+    IPHeader                                        ip;
+    std::shared_ptr<ITLHeader>                      tl;
+    std::chrono::high_resolution_clock::time_point  tp;
   };
 
   template<typename T>
   inline const Payload<T> Packet::getPayload() const
   {
-    return Payload<T>(buff);
+    int   headerlen;
+
+    headerlen = eth.getLenght() + ip.getHeaderLenght() + tl->getLenght();
+    return Payload<T>(buff + headerlen, len - headerlen);
   }
 
   template<typename T>

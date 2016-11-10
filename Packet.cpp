@@ -3,7 +3,8 @@
 #include "Packet.h"
 
 Yellow::Packet::Packet(void *buffer, int lenght)
-  : buff(static_cast<unsigned char *>(buffer)), eth(buff), ip(buff + eth.getLenght()), len(lenght)
+  : buff(static_cast<unsigned char *>(buffer)), eth(buff), ip(buff + eth.getLenght()), len(lenght),
+    tp(std::chrono::high_resolution_clock::now())
 {
   switch (ip.getProtocol())
     {
@@ -40,4 +41,14 @@ const unsigned char							*Yellow::Packet::operator[](int idx) const
   if (idx >= len)
     return NULL;
   return (&buff[idx]);
+}
+
+const int                       Yellow::Packet::getLenght() const
+{
+  return len;
+}
+
+std::chrono::high_resolution_clock::time_point  &Yellow::Packet::getTimePoint()
+{
+  return (tp);
 }
