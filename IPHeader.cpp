@@ -2,113 +2,141 @@
 #include "IPHeader.h"
 
 Yellow::IPHeader::IPHeader(void * begin)
+  : buff(static_cast<unsigned char *>(begin)), ip(static_cast<struct iphdr *>(begin))
 {
+  memset(&sourceaddr, 0, sizeof(sourceaddr));
+  sourceaddr.sin_addr.s_addr = ip->saddr;
+  source = inet_ntoa(sourceaddr.sin_addr);
+
+  memset(&destaddr, 0, sizeof(destaddr));
+  destaddr.sin_addr.s_addr = ip->daddr;
+  dest = inet_ntoa(destaddr.sin_addr);
 }
 
-Yellow::IPHeader::IPHeader(const IPHeader &)
+Yellow::IPHeader::IPHeader(const IPHeader &i)
 {
+  buff = i.buff;
+  ip = i.ip;
 }
 
-Yellow::IPHeader & Yellow::IPHeader::operator=(const IPHeader &ip)
+Yellow::IPHeader & Yellow::IPHeader::operator=(const IPHeader &i)
 {
-	return *this;
+  buff = i.buff;
+  ip = i.ip;
+  return *this;
 }
 
 Yellow::IPHeader::~IPHeader()
 {
 }
 
-void Yellow::IPHeader::setVersion(unsigned int)
+void Yellow::IPHeader::setVersion(unsigned int ver)
 {
+  ip->version = ver;
 }
 
-unsigned int Yellow::IPHeader::getVesion()
+const unsigned int Yellow::IPHeader::getVesion() const
 {
-	return 0;
+  return ip->version;
 }
 
-void Yellow::IPHeader::setHeaderLenght(unsigned int)
+void Yellow::IPHeader::setHeaderLenght(unsigned int nbWord)
 {
+  ip->ihl = nbWord / 4;
 }
 
-unsigned int Yellow::IPHeader::getHeaderLenght()
+const unsigned int Yellow::IPHeader::getHeaderLenght() const
 {
-	return 0;
+  return (ip->ihl * 4);
 }
 
-void Yellow::IPHeader::setTypeOfService(unsigned int)
+void Yellow::IPHeader::setTypeOfService(unsigned int tos)
 {
+  ip->tos = tos;
 }
 
-unsigned int Yellow::IPHeader::getTypeOfService()
+const unsigned int Yellow::IPHeader::getTypeOfService() const
 {
-	return 0;
+  return (ip->tos);
 }
 
-void Yellow::IPHeader::setTotalLenght(unsigned short int)
+void Yellow::IPHeader::setTotalLenght(unsigned short int tot)
 {
+  ip->tot_len = htons(tot);
 }
 
-unsigned short int Yellow::IPHeader::getTotalLenght()
+const unsigned short int Yellow::IPHeader::getTotalLenght() const
 {
-	return 0;
+  return ntohs(ip->tot_len);
 }
 
-void Yellow::IPHeader::setIdentification(unsigned short int)
+void Yellow::IPHeader::setIdentification(unsigned short int id)
 {
+  ip->id = htons(id);
 }
 
-unsigned short Yellow::IPHeader::getIndentification()
+const unsigned short Yellow::IPHeader::getIndentification() const
 {
-	return 0;
+  return ntohs(ip->id);
 }
 
-void Yellow::IPHeader::setTTL(unsigned int)
+void Yellow::IPHeader::setTTL(unsigned int ttl)
 {
+  ip->ttl = ttl;
 }
 
-unsigned int Yellow::IPHeader::getTTL()
+const unsigned int Yellow::IPHeader::getTTL() const
 {
-	return 0;
+  return ip->ttl;
 }
 
-void Yellow::IPHeader::setProtocol(unsigned int)
+void Yellow::IPHeader::setProtocol(unsigned int proto)
 {
+  ip->protocol = proto;
 }
 
-unsigned int Yellow::IPHeader::getProtocol()
+const unsigned int Yellow::IPHeader::getProtocol() const
 {
-	return 0;
+  return ip->protocol;
 }
 
-void Yellow::IPHeader::setChecksum(unsigned short int)
+void Yellow::IPHeader::setChecksum(unsigned short int check)
 {
+  ip->check = htons(check);
 }
 
-unsigned short int Yellow::IPHeader::getChecksum()
+const unsigned short int Yellow::IPHeader::getChecksum() const
 {
-	return 0;
+  return ntohs(ip->check);
 }
 
-void Yellow::IPHeader::setSourceIP(const char *)
+void Yellow::IPHeader::setSourceIP(const std::string &addr)
 {
+  inet_aton(addr.c_str(), &sourceaddr.sin_addr);
+  ip->saddr = sourceaddr.sin_addr.s_addr;
+  source = addr;
 }
 
-const char * Yellow::IPHeader::getSourceIP()
+const std::string   &Yellow::IPHeader::getSourceIP() const
 {
-	return nullptr;
+  return source;
 }
 
-void Yellow::IPHeader::setDestIP(const char *)
+void Yellow::IPHeader::setDestIP(const std::string &addr)
 {
+  inet_aton(addr.c_str(), &destaddr.sin_addr);
+  ip->daddr = destaddr.sin_addr.s_addr;
+  dest = addr;
 }
 
-const char * Yellow::IPHeader::getDestinationIP()
+const std::string   &Yellow::IPHeader::getDestinationIP() const
 {
-	return nullptr;
+  return dest;
 }
 
-const void * Yellow::IPHeader::operator[](int) const
+const unsigned char * Yellow::IPHeader::operator[](int idx) const
 {
-	return nullptr;
+  if (idx >= getHeaderLenght())
+    return NULL;
+  return &static_cast<const unsigned char *>(buff)[idx];
 }

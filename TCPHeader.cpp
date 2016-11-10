@@ -1,137 +1,164 @@
 #include "stdafx.h"
 #include "TCPHeader.h"
 
-Yellow::TCPHeader::TCPHeader(void *)
+Yellow::TCPHeader::TCPHeader(void *begin)
+  :buff(static_cast<unsigned char *>(begin)), tcp(static_cast<struct tcphdr *>(begin))
 {
+
 }
 
 Yellow::TCPHeader::~TCPHeader()
 {
 }
 
-void					*Yellow::TCPHeader::operator[](int) const
+const unsigned char		*Yellow::TCPHeader::operator[](int idx) const
 {
-	return nullptr;
+  if (idx >= getHeaderLenght())
+    return NULL;
+   return &buff[idx];
 }
 
-const int				Yellow::TCPHeader::getLenght() const
+const int             Yellow::TCPHeader::getLenght() const
 {
-	return 0;
+  return (getHeaderLenght());
 }
 
-void					Yellow::TCPHeader::setSourcePort(const unsigned short int)
+void					Yellow::TCPHeader::setSourcePort(const unsigned short int port)
 {
+  tcp->source = htons(port);
 }
 
-unsigned short int		Yellow::TCPHeader::getSourcePort() const
+const unsigned short int		Yellow::TCPHeader::getSourcePort() const
 {
-	return 0;
+  return ntohs(tcp->source);
 }
 
-void					Yellow::TCPHeader::setDestPort(const unsigned short int)
+void					Yellow::TCPHeader::setDestPort(const unsigned short int port)
 {
+  tcp->dest = htons(port);
 }
 
-unsigned short int		Yellow::TCPHeader::getDestPort() const
+const unsigned short int		Yellow::TCPHeader::getDestPort() const
 {
-	return 0;
+  return ntohs(tcp->dest);
 }
 
-void					Yellow::TCPHeader::setSequenceNumber(const unsigned short int)
+void					Yellow::TCPHeader::setSequenceNumber(const unsigned short int nb)
 {
+  tcp->seq = nb;
 }
 
-unsigned short int		Yellow::TCPHeader::getSequenceNumber() const
+const unsigned short int		Yellow::TCPHeader::getSequenceNumber() const
 {
-	return 0;
+  return tcp->seq;
 }
 
-void					Yellow::TCPHeader::setAcknowledgeNumber(const unsigned short int)
+void					Yellow::TCPHeader::setAcknowledgeNumber(const unsigned short int nb)
 {
+  tcp->ack_seq = nb;
 }
 
-unsigned short int		Yellow::TCPHeader::getAcknowledgeNumber() const
+const unsigned short int		Yellow::TCPHeader::getAcknowledgeNumber() const
 {
-	return 0;
+  return tcp->ack_seq;
 }
 
-void					Yellow::TCPHeader::setHeaderLenght(const unsigned int)
+void					Yellow::TCPHeader::setHeaderLenght(const unsigned int lenghtWord)
 {
+  tcp->doff = lenghtWord / 4;
 }
 
-unsigned int			Yellow::TCPHeader::getHeaderLenght() const
+const unsigned int			Yellow::TCPHeader::getHeaderLenght() const
 {
-	return 0;
+  return tcp->doff * 4;
 }
 
-void					Yellow::TCPHeader::setUrgentFlag(const unsigned int)
+void					Yellow::TCPHeader::setUrgentFlag(const unsigned int urg)
 {
+  tcp->urg = urg;
 }
 
-unsigned int			Yellow::TCPHeader::getUrgentFlag() const
+const unsigned int			Yellow::TCPHeader::getUrgentFlag() const
 {
-	return 0;
+  return tcp->urg;
 }
 
-void					Yellow::TCPHeader::setAcknowledgementFlag(const unsigned int)
+void					Yellow::TCPHeader::setAcknowledgementFlag(const unsigned int ack)
 {
+  tcp->ack = ack;
 }
 
-unsigned int			Yellow::TCPHeader::getAcknowledgementFlag() const
+const unsigned int			Yellow::TCPHeader::getAcknowledgementFlag() const
 {
-	return 0;
+  return tcp->ack;
 }
 
-void					Yellow::TCPHeader::setPushFlag(const unsigned int)
+void					Yellow::TCPHeader::setPushFlag(const unsigned int push)
 {
+  tcp->psh = push;
 }
 
-unsigned int			Yellow::TCPHeader::getPushFlag() const
+const unsigned int			Yellow::TCPHeader::getPushFlag() const
 {
-	return 0;
+  return tcp->psh;
 }
 
-void					Yellow::TCPHeader::setSynchroniseFlag(const unsigned int)
+void                    Yellow::TCPHeader::setResetFlag(const unsigned int rst)
 {
+  tcp->rst = rst;
 }
 
-unsigned int			Yellow::TCPHeader::getSynchroniseFlag() const
+const unsigned int            Yellow::TCPHeader::getResetFlag() const
 {
-	return 0;
+  return tcp->rst;
 }
 
-void					Yellow::TCPHeader::setFinishFlag(const unsigned int)
+void                    Yellow::TCPHeader::setSynchroniseFlag(const unsigned int sync)
 {
+  tcp->syn = sync;
 }
 
-unsigned int			Yellow::TCPHeader::getFinishFlag() const
+const unsigned int			Yellow::TCPHeader::getSynchroniseFlag() const
 {
-	return 0;
+  return tcp->syn;
 }
 
-void					Yellow::TCPHeader::setWindow(const unsigned short int)
+void					Yellow::TCPHeader::setFinishFlag(const unsigned int fin)
 {
+  tcp->fin = fin;
 }
 
-unsigned short int		Yellow::TCPHeader::getWindow() const
+const unsigned int			Yellow::TCPHeader::getFinishFlag() const
 {
-	return 0;
+  return tcp->fin;
 }
 
-void					Yellow::TCPHeader::seChecksum(const unsigned short int)
+void					Yellow::TCPHeader::setWindow(const unsigned short int win)
 {
+  tcp->window = htons(win);
 }
 
-unsigned short int		Yellow::TCPHeader::getChecksum() const
+const unsigned short int		Yellow::TCPHeader::getWindow() const
 {
-	return 0;
+  return ntohs(tcp->window);
 }
 
-void					Yellow::TCPHeader::setUrgentPointer(const unsigned int)
+void					Yellow::TCPHeader::seChecksum(const unsigned short int check)
 {
+  tcp->check = htons(check);
 }
 
-unsigned int			Yellow::TCPHeader::getUrgentPointer() const
+const unsigned short int		Yellow::TCPHeader::getChecksum() const
 {
-	return 0;
+  return ntohs(tcp->check);
+}
+
+void					Yellow::TCPHeader::setUrgentPointer(const unsigned int urg)
+{
+  tcp->urg_ptr = urg;
+}
+
+const unsigned int			Yellow::TCPHeader::getUrgentPointer() const
+{
+  return tcp->urg_ptr;
 }

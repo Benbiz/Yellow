@@ -5,16 +5,18 @@
 
 namespace Yellow
 {
-	class Sniffer
-	{
-	public:
-		Sniffer();
-		~Sniffer();
+  class Sniffer
+  {
+  public:
+    Sniffer();
+    ~Sniffer();
 
-		std::shared_ptr<Yellow::Packet>		getPacket();
+    std::shared_ptr<Yellow::Packet>		getPacket();
 
-		bool								start();
-	};
+    bool				start();
+  private:
+    int					_sock;
+  };
 }
 
 #endif /* !SNIFFER_H_ */

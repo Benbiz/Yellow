@@ -5,59 +5,62 @@
 
 namespace Yellow
 {
-	class TCPHeader : public Yellow::ITLHeader
-	{
-	public:
-		TCPHeader(void *);
-		TCPHeader(const TCPHeader &);
-		TCPHeader &operator=(const TCPHeader &);
-		virtual ~TCPHeader();
+  class TCPHeader : public Yellow::ITLHeader
+  {
+  public:
+    TCPHeader(void *);
+    TCPHeader(const TCPHeader &);
+    TCPHeader &operator=(const TCPHeader &);
+    virtual ~TCPHeader();
 
-		virtual void		*operator[](int) const;
-		virtual const int	getLenght() const;
+    virtual const unsigned char     *operator[](int) const;
+    virtual const int               getLenght() const;
 
-		void				setSourcePort(const unsigned short int);
-		unsigned short int	getSourcePort() const;
+    void                      setSourcePort(const unsigned short int);
+    const unsigned short int	getSourcePort() const;
 
-		void				setDestPort(const unsigned short int);
-		unsigned short int	getDestPort() const;
+    void                      setDestPort(const unsigned short int);
+    const unsigned short int	getDestPort() const;
 
-		void				setSequenceNumber(const unsigned short int);
-		unsigned short int	getSequenceNumber() const;
+    void                      setSequenceNumber(const unsigned short int);
+    const unsigned short int	getSequenceNumber() const;
 
-		void				setAcknowledgeNumber(const unsigned short int);
-		unsigned short int	getAcknowledgeNumber() const;
+    void                      setAcknowledgeNumber(const unsigned short int);
+    const unsigned short int	getAcknowledgeNumber() const;
 
-		void				setHeaderLenght(const unsigned int);
-		unsigned int		getHeaderLenght() const;
+    void                      setHeaderLenght(const unsigned int);
+    const unsigned int        getHeaderLenght() const;
 
-		void				setUrgentFlag(const unsigned int);
-		unsigned int		getUrgentFlag() const;
+    void                      setUrgentFlag(const unsigned int);
+    const unsigned int        getUrgentFlag() const;
 
-		void				setAcknowledgementFlag(const unsigned int);
-		unsigned int		getAcknowledgementFlag() const;
+    void                      setAcknowledgementFlag(const unsigned int);
+    const unsigned int        getAcknowledgementFlag() const;
 
-		void				setPushFlag(const unsigned int);
-		unsigned int		getPushFlag() const;
+    void                      setPushFlag(const unsigned int);
+    const unsigned int        getPushFlag() const;
 
-		void				setSynchroniseFlag(const unsigned int);
-		unsigned int		getSynchroniseFlag() const;
+    void                      setResetFlag(const unsigned int);
+    const unsigned int        getResetFlag() const;
 
-		void				setFinishFlag(const unsigned int);
-		unsigned int		getFinishFlag() const;
-		
-		void				setWindow(const unsigned short int);
-		unsigned short int	getWindow() const;
+    void                      setSynchroniseFlag(const unsigned int);
+    const unsigned int        getSynchroniseFlag() const;
 
-		void				seChecksum(const unsigned short int);
-		unsigned short int	getChecksum() const;
+    void                      setFinishFlag(const unsigned int);
+    const unsigned int        getFinishFlag() const;
 
-		void				setUrgentPointer(const unsigned int);
-		unsigned int		getUrgentPointer() const;
+    void                      setWindow(const unsigned short int);
+    const unsigned short int	getWindow() const;
 
-	private:
+    void                      seChecksum(const unsigned short int);
+    const unsigned short int	getChecksum() const;
 
-	};
+    void                      setUrgentPointer(const unsigned int);
+    const unsigned int        getUrgentPointer() const;
+  private:
+    unsigned char       *buff;
+    struct tcphdr       *tcp;
+  };
 }
 
 #endif /* !TCPHEADER_H_ */

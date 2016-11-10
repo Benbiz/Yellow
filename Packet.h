@@ -9,43 +9,42 @@
 
 namespace Yellow
 {
-	class Packet
-	{
-	public:
-		Packet(void *buff, int len);
-		~Packet();
+  class Packet
+  {
+  public:
+    Packet(void *buff, int len);
+    ~Packet();
 
-		const EthHeader						&getEthHeader() const;
-		const IPHeader						&getIPHeader() const;
-		
-		const std::shared_ptr<ITLHeader>	getTLHeader() const;
-		
+    const EthHeader                           &getEthHeader() const;
+    const IPHeader                            &getIPHeader() const;
 
-		template <typename T>
-		const Payload<T>					getPayload() const;
-		template <typename T>
-		void								setPayload(const Payload<T> &);
+    const std::shared_ptr<Yellow::ITLHeader>  getTLHeader() const;
 
-		const void							*operator[](int) const;
+    template <typename T>
+    const Payload<T>                        	getPayload() const;
+    template <typename T>
+    void                                      setPayload(const Payload<T> &);
 
-	private:
-		void						*buff;
-		int							len;
-		EthHeader					eth;
-		IPHeader					ip;
-		std::shared_ptr<ITLHeader>	tl;
-	};
+    const unsigned char                       *operator[](int) const;
 
-	template<typename T>
-	inline const Payload<T> Packet::getPayload() const
-	{
-		return Payload<T>(buff);
-	}
+  private:
+    unsigned char               *buff;
+    int                         len;
+    EthHeader                   eth;
+    IPHeader                    ip;
+    std::shared_ptr<ITLHeader>	tl;
+  };
 
-	template<typename T>
-	inline void Packet::setPayload(const Payload<T>&)
-	{
-	}
+  template<typename T>
+  inline const Payload<T> Packet::getPayload() const
+  {
+    return Payload<T>(buff);
+  }
+
+  template<typename T>
+  inline void Packet::setPayload(const Payload<T>&)
+  {
+  }
 }
 
 #endif /* !PACKET_H_ */

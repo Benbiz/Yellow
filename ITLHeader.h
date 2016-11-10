@@ -3,14 +3,14 @@
 
 namespace Yellow
 {
-	class ITLHeader
-	{
-	public:
-		virtual ~ITLHeader() {}
+  class ITLHeader
+  {
+  public:
+    virtual ~ITLHeader() {}
 
-		virtual void		*operator[](int) const = 0;
-		virtual const int	getLenght() const = 0;
-	};
+    virtual const unsigned char	*operator[](int) const = 0;
+    virtual const int           getLenght() const = 0;
+  };
 }
 
 #endif /* !ITLHEADER_H_ */
