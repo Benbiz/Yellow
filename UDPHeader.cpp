@@ -42,35 +42,35 @@ const unsigned short int			Yellow::UDPHeader::getSourcePort() const
 
 void					Yellow::UDPHeader::setSourcePort(const unsigned short int source)
 {
-  udp->source = source;
+  udp->source = htons(source);
 }
 
 const unsigned short int			Yellow::UDPHeader::getDestPort() const
 {
-  return (udp->dest);
+  return ntohs(udp->dest);
 }
 
 void					Yellow::UDPHeader::setDestPort(const unsigned short int dest)
 {
-  udp->dest = dest;
+  udp->dest = htons(dest);
 }
 
 const unsigned short int			Yellow::UDPHeader::getUDPLenght() const
 {
-  return udp->len;
+  return ntohs(udp->len);
 }
 
 void					Yellow::UDPHeader::setUDPLenght(const unsigned short int len)
 {
-  udp->len = len;
+  udp->len = htons(len);
 }
 
 const unsigned short int			Yellow::UDPHeader::getChecksum() const
 {
-  return (udp->check);
+  return ntohs(udp->check);
 }
 
 void					Yellow::UDPHeader::setChecksum(const unsigned short int check)
 {
-  udp->check = check;
+  udp->check = htons(check);
 }
