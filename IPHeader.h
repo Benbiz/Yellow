@@ -12,9 +12,9 @@ namespace Yellow
     ~IPHeader();
 
     void                        setVersion(unsigned int);
-    const unsigned int          getVesion() const;
+   const unsigned int          getVersion() const;
 
-    void                        setHeaderLenght(unsigned int);
+   void                        setHeaderLenght(unsigned int);
     const unsigned int          getHeaderLenght() const;
 
     void                        setTypeOfService(unsigned int);

@@ -18,8 +18,8 @@ namespace Yellow
       const GlobalHeader                          &getGlobalHeader() const;
       const std::vector<std::shared_ptr<Record>>  &getRecords() const;
 
-      void                                        addRecord(std::shared_ptr<Record>);
-      void                                        addRecord(std::shared_ptr<Yellow::Packet>);
+      std::shared_ptr<Record>                     addRecord(std::shared_ptr<Record>);
+      std::shared_ptr<Record>                     addRecord(std::shared_ptr<Yellow::Packet>);
 
       friend std::ostream                                &operator<<(std::ostream &output, Yellow::PCAP::Recorder &);
       friend std::istream                                &operator>>(std::istream &input, Yellow::PCAP::Recorder &);

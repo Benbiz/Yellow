@@ -1,17 +1,23 @@
 #include "stdafx.h"
 #include "TCPHeader.h"
+#include "UDPHeader.h"
 #include "Packet.h"
 
 Yellow::Packet::Packet(void *buffer, int lenght)
   : buff(static_cast<unsigned char *>(buffer)), eth(buff), ip(buff + eth.getLenght()), len(lenght),
     tp(std::chrono::high_resolution_clock::now())
 {
+  if (eth.getProto() != 8)
+    throw std::invalid_argument("Not IP packet");
   switch (ip.getProtocol())
     {
-    case 6: //TCP
+    case IPPROTO_TCP: //TCP
       tl = std::make_shared<Yellow::TCPHeader>(buff + eth.getLenght() + ip.getHeaderLenght());
       break;
+    case IPPROTO_UDP: // UDP
+      tl = std::make_shared<Yellow::UDPHeader>(buff + eth.getLenght() + ip.getHeaderLenght());
     default:
+      throw std::invalid_argument("Transport Protocol not supported");
       break;
     }
 }

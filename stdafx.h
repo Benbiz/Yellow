@@ -4,6 +4,7 @@
 // System
 #include <memory>
 #include <iostream>
+#include <exception>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/ip_icmp.h>   //Provides declarations for icmp header

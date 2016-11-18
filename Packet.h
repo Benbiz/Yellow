@@ -1,7 +1,6 @@
 #ifndef PACKET_H_
 # define PACKET_H_
 
-#include "Packet.h"
 #include "Payload.hpp"
 #include "EthHeader.h"
 #include "IPHeader.h"

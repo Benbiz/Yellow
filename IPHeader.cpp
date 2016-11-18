@@ -35,7 +35,7 @@ void Yellow::IPHeader::setVersion(unsigned int ver)
   ip->version = ver;
 }
 
-const unsigned int Yellow::IPHeader::getVesion() const
+const unsigned int Yellow::IPHeader::getVersion() const
 {
   return ip->version;
 }

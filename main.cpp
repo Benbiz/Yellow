@@ -22,14 +22,11 @@ int		main()
     }
   while ((pack = s.getPacket()) != nullptr)
     {
-      if (pack->getEthHeader().getProto() == 8 && pack->getIPHeader().getProtocol() == 6)
-        {
-          rec.addRecord(pack);
-          ofs << rec;
-          ofs.seekp(std::ios_base::beg);
-          std::cout << "Source IP : " << pack->getIPHeader().getSourceIP()
-                    << ", Destination IP :" << pack->getIPHeader().getDestinationIP() << std::endl;
-        }
+      rec.addRecord(pack);
+      ofs << rec;
+      ofs.seekp(std::ios_base::beg);
+      std::cout << "Source IP : " << pack->getIPHeader().getSourceIP()
+		<< ", Destination IP :" << pack->getIPHeader().getDestinationIP() << std::endl;
     }
   return 0;
 }

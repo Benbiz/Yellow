@@ -30,14 +30,18 @@ const std::vector<std::shared_ptr<Yellow::PCAP::Record>>  &Yellow::PCAP::Recorde
   return _records;
 }
 
-void                                                      Yellow::PCAP::Recorder::addRecord(std::shared_ptr<Yellow::PCAP::Record> rec)
+std::shared_ptr<Yellow::PCAP::Record>                                    Yellow::PCAP::Recorder::addRecord(std::shared_ptr<Yellow::PCAP::Record> rec)
 {
   _records.push_back(rec);
+  return rec;
 }
 
-void                                                      Yellow::PCAP::Recorder::addRecord(std::shared_ptr<Yellow::Packet> pack)
+std::shared_ptr<Yellow::PCAP::Record>		            Yellow::PCAP::Recorder::addRecord(std::shared_ptr<Yellow::Packet> pack)
 {
-  _records.push_back(std::make_shared<Yellow::PCAP::Record>(pack));
+  std::shared_ptr<Record>	rec = std::make_shared<Yellow::PCAP::Record>(pack);
+  _records.push_back(rec);
+
+  return rec;
 }
 
 std::ostream            &Yellow::PCAP::operator<<(std::ostream &output, Yellow::PCAP::Recorder &rec)
