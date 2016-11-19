@@ -28,7 +28,7 @@ int		main()
                 << ", Destination IP :" << pack->getIPHeader().getDestinationIP()
                 << ", proto: " << pack->getIPHeader().getProtocol() << std::endl;
       i++;
-      if (i >= 1500)
+      if (i >= 150)
         {
           std::cout << "Stopping..." << std::endl;
           s.stop();

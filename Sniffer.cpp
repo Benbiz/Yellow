@@ -31,16 +31,12 @@ std::shared_ptr<Yellow::Packet> Yellow::Sniffer::getPacket()
       if (dataSize < 0)
         {
           _state = Yellow::Sniffer::Status::Failed;
-          close (_sock);
-          _sock = -1;
           delete[] buff;
           return nullptr;
         }
       else if (dataSize == 0 && _state != Yellow::Sniffer::Status::Started)
         {
           delete [] buff;
-          close (_sock);
-          _sock = -1;
           return nullptr;
         }
       else if (_state != Yellow::Sniffer::Status::Started)
@@ -94,5 +90,9 @@ void Yellow::Sniffer::stop()
 {
   _state = Yellow::Sniffer::Status::Closed;
   if (_sock != -1)
-    shutdown(_sock, SHUT_RDWR);
+    {
+      shutdown(_sock, SHUT_RDWR);
+      close(_sock);
+      _sock = -1;
+    }
 }
