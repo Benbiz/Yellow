@@ -54,7 +54,6 @@ std::shared_ptr<Yellow::Packet> Yellow::Sniffer::getPacket()
           packet = nullptr;
         }
     }
-
   return (packet);
 }
 
