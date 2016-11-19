@@ -16,6 +16,7 @@ Yellow::Packet::Packet(void *buffer, int lenght)
       break;
     case IPPROTO_UDP: // UDP
       tl = std::make_shared<Yellow::UDPHeader>(buff + eth.getLenght() + ip.getHeaderLenght());
+      break;
     default:
       throw std::invalid_argument("Transport Protocol not supported");
       break;

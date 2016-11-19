@@ -62,6 +62,7 @@ std::istream            &Yellow::PCAP::operator>>(std::istream &input, Yellow::P
   if (!input || input.eof())
     return (input);
 
+  rec._records.clear();
   record = std::make_shared<Yellow::PCAP::Record>();
   while (input >> *record)
     {

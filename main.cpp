@@ -4,6 +4,7 @@
 
 int		main()
 {
+  int             i = 0;
   Yellow::Sniffer s;
   Yellow::PCAP::Recorder  rec;
 
@@ -23,10 +24,16 @@ int		main()
   while ((pack = s.getPacket()) != nullptr)
     {
       rec.addRecord(pack);
-      ofs << rec;
-      ofs.seekp(std::ios_base::beg);
       std::cout << "Source IP : " << pack->getIPHeader().getSourceIP()
-		<< ", Destination IP :" << pack->getIPHeader().getDestinationIP() << std::endl;
+                << ", Destination IP :" << pack->getIPHeader().getDestinationIP()
+                << ", proto: " << pack->getIPHeader().getProtocol() << std::endl;
+      i++;
+      if (i >= 1500)
+        {
+          std::cout << "Stopping..." << std::endl;
+          s.stop();
+        }
     }
+  ofs << rec;
   return 0;
 }

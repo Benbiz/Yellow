@@ -12,7 +12,10 @@
 #include <netinet/tcp.h>   //Provides declarations for tcp header
 #include <netinet/ip.h>    //Provides declarations for ip header
 #include <netinet/if_ether.h>  //For ETH_P_ALL
+#include <sys/ioctl.h>
+#include <net/if.h>
 #include <net/ethernet.h>  //For ether_header
+#include <linux/if_packet.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <cstring>
